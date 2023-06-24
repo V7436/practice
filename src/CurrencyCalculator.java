@@ -71,9 +71,9 @@ public class CurrencyCalculator {
 
         Matcher matcher = pattern.matcher(input);
         while (matcher.find()) {
-            double num1 = Double.parseDouble(matcher.group(1).replaceAll("\\$", ""));
+            double num1 = Double.parseDouble(matcher.group(1).replaceFirst("\\$", ""));
             String operator = matcher.group(3);
-            double num2 = Double.parseDouble(matcher.group(4).replaceAll("\\$", ""));
+            double num2 = Double.parseDouble(matcher.group(4).replaceFirst("\\$", ""));
             double result = 0;
 
             if (operator.equals("+")) {
@@ -92,13 +92,15 @@ public class CurrencyCalculator {
         return input;
     }
     public static String evaluateRubles(String input) {
-        Pattern pattern = Pattern.compile("(\\d+\\.\\d+р)\\s*([+\\-*/])\\s*(\\d+\\.\\d+р)");
+        //Pattern pattern = Pattern.compile("(\\$\\d+(\\.\\d+)?)\\s*([+\\-*/])\\s*(\\$\\d+(\\.\\d+)?)");
+        //Pattern pattern = Pattern.compile("(\\d+(\\.\\d+?)+р)\\s*([+\\-*/])\\s*(\\d+(\\.\\d+)?+р)");
+        Pattern pattern = Pattern.compile("(\\d+(\\.\\d+)?р)\\s*([+\\-*/])\\s*(\\d+(\\.\\d+)?р)");
 
         Matcher matcher = pattern.matcher(input);
         while (matcher.find()) {
-            double num1 = Double.parseDouble(matcher.group(1).replaceAll("р", ""));
-            String operator = matcher.group(2);
-            double num2 = Double.parseDouble(matcher.group(3).replaceAll("р", ""));
+            double num1 = Double.parseDouble(matcher.group(1).replaceFirst("р", ""));
+            String operator = matcher.group(3);
+            double num2 = Double.parseDouble(matcher.group(4).replaceFirst("р", ""));
             double result = 0;
 
             if (operator.equals("+")) {
@@ -142,10 +144,8 @@ public class CurrencyCalculator {
         return count;
     }
     public static boolean validateString(String input) {
-        // Паттерн для проверки
         String pattern = "^[0-9.$р]+$";
 
-        // Сравнение строки с паттерном
         return input.matches(pattern);
     }
 }
